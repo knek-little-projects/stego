@@ -1,0 +1,71 @@
+#!/bin/bash
+cd "$(dirname $(readlink -f $0))"
+stego_path="$(pwd)/../stego"
+tmp="/tmp/stego-test"
+
+rm -rf "${tmp}"
+mkdir -p "${tmp}"
+
+cp -r secret stego_files "${tmp}"
+cd "${tmp}"
+
+stego() {
+    "${stego_path}" --sep "${sep}" $@
+}
+
+echo "[*] dry run"
+stego -h
+
+for sep in "xxx2oc12o3c1" "|||"
+do
+    echo "[*] sep: ${sep}"
+    echo "[*] pack"
+    cat stego_files/1 stego_files/some_dir/2 > 12
+    stego pack stego_files/1 stego_files/some_dir/2 secret
+    cat stego_files/1 stego_files/some_dir/2 > 12packed
+    if cmp 12 12packed
+    then
+        echo "[!] failed: stego files didn't change..."
+        exit 1
+    fi
+
+    echo "[*] list"
+    stego list stego_files/1 stego_files/some_dir/2 | grep -oE "secret/.*$" | sort | sed -r 's/\/+$//g' > list1
+    find secret | sort | sed -r 's/\/+$//g' > list2
+    if ! cmp list1 list2
+    then
+        echo "[!] failed: file lists are differ..."
+        echo "-- packed secret: --"
+        cat list1
+        echo "-- real secret: --"
+        cat list2
+        exit 2
+    fi
+
+    echo "[*] unpack"
+    mkdir out
+    stego unpack stego_files/1 stego_files/some_dir/2 out
+    find out | xargs cat > cat1
+    find secret | xargs cat > cat2
+    if ! cmp cat1 cat2
+    then
+        echo "[!] unpacked files are differ..."
+        exit 3
+    fi
+    rm -rf out
+
+    echo "[*] clear"
+    stego clear stego_files/1 stego_files/some_dir/2
+    find stego_files | xargs cat > 12cleared
+    if ! cmp 12 12cleared
+    then
+        echo "[!] failed to remove stego files"
+        echo "-- before: --"
+        cat 12
+        echo "-- after: --"
+        cat 12cleared
+        exit 4
+    fi
+done
+
+rm -rf "${tmp}"
