@@ -7,9 +7,9 @@ class Cryptor:
         self._input = input
 
     def encrypt(self) -> bytes:
-        p = Popen(["openssl", self._cipher_algo, "-e", "-salt"], stdin=PIPE, stdout=PIPE)
+        p = Popen(["openssl", self._cipher_algo, "-e", "-salt", "-pbkdf2"], stdin=PIPE, stdout=PIPE)
         return p.communicate(self._input)[0]
 
     def decrypt(self) -> bytes:
-        p = Popen(["openssl", self._cipher_algo, "-d"], stdin=PIPE, stdout=PIPE)
+        p = Popen(["openssl", self._cipher_algo, "-d", "-pbkdf2"], stdin=PIPE, stdout=PIPE)
         return p.communicate(self._input)[0]
