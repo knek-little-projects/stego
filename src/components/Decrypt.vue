@@ -19,7 +19,7 @@
 
     <label>
       Image/secret separator
-      <input v-model="sep" />
+      <input autocomplete="off" v-model="sep" />
     </label>
 
     <b-modal v-model="modal" centered hide-header-close hide-header>
