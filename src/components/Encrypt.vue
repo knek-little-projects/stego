@@ -32,6 +32,8 @@
       <input autocomplete="off" v-model="sep" />
     </label>
 
+    <label> Cipher params: keySize: 128/32, hasher: MD5, iterations: 1 </label>
+
     <b-modal v-model="modal" centered hide-header-close hide-header>
       <template v-if="os1 && os2">
         <h2>Hide this files apart:</h2>
@@ -54,7 +56,9 @@
     </b-modal>
 
     <div class="footer">
-      <button :disabled="disabled" class="go encrypt" @click="encrypt">Encrypt!</button>
+      <button :disabled="disabled" class="go encrypt" @click="encrypt">
+        Encrypt!
+      </button>
     </div>
   </div>
 </template>
@@ -97,8 +101,8 @@ export default {
             this.sep,
             this.password,
             this.image1.bytes,
-            this.image2.bytes,
-          )
+            this.image2.bytes
+          );
 
           this.os1 = bytes.bytesToOctetStream(output1);
           this.os2 = bytes.bytesToOctetStream(output2);

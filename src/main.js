@@ -8,6 +8,7 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
 import CryptoJS from "crypto-js"
+import "@/utils/kdf-pbkdf2"
 window.CryptoJS = CryptoJS
 
 import * as bytes from "@/utils/bytes"
