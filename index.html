@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Simple Stego</title>
+
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-eval' 'unsafe-inline'">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+  <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+  <label>
+    Stego file 1
+    <input id="file1" type="file" />
+  </label>
+
+  <label>
+    Stego file 2
+    <input id="file2" type="file" />
+  </label>
+
+  <label>
+    Secret
+    <input id="fileSecret" type="file" />
+  </label>
+
+  <hr />
+
+  <input id="password" value="password" />
+  <input id="algoLength" value="256" />
+  <input id="kdfHashName" value="SHA-512" />
+  <input id="algoName" value="AES-CBC" />
+  <input id="kdfName" value="PBKDF2" />
+  <input id="kdfIterations" value="1000000" />
+  <input id="fileSeparator" value="===" />
+
+  <hr />
+
+  <button onclick="mainEncrypt()">ENCRYPT</button>
+  <button onclick="mainDecrypt()">DECRYPT</button>
+
+  <hr />
+
+  <div id="result" class="hidden">
+    <a id="resultStegoFile1"><button>Encrypted stego file 1</button></a>
+    <a id="resultStegoFile2"><button>Encrypted stego file 2</button></a>
+    <a id="resultDecryptedFile"><button>Decrypted secret</button></a>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+
+</html>
