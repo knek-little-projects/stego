@@ -1,3 +1,80 @@
+#result.hidden {
+  display: none;
+}
+
 .hidden {
   display: none;
 }
+
+#result {
+  margin-top: 2ch;
+  text-align: right;
+  display: block;
+  text-align: center;
+}
+
+.down-arrow {
+  font-size: 40px;
+  padding-bottom: 20px;
+}
+
+#result button {
+  font-size: 20px;
+  text-transform: uppercase;
+  width: 160px;
+  height: 160px;
+}
+
+div {
+  line-height: 30px;
+}
+
+.main {
+  padding: 2ch;
+  background: white;
+  display: inline-block;
+  border-radius: 10px;
+}
+
+.form {
+  max-width: 50ch;
+  background: rgba(0,0,0,0.01);
+  border: 1px solid gray;
+}
+
+.form .title {
+  padding-left: 1ch;
+}
+
+.form .field {
+  padding-left: 1ch;
+  padding-bottom: 0.5ch;
+  padding-top: 0.5ch;
+}
+
+.field:nth-child(even) {
+  background: rgba(0,0,0,0.05);
+}
+
+.field:nth-child(odd) {
+  background: rgba(0,0,0,0.01);
+}
+
+.field .name {
+  display: inline-block;
+  width: 15ch;
+}
+
+.field .value {
+  display: inline-block;
+}
+
+.form .footer {
+  padding: 2ch;
+  text-align: right;
+}
+
+.form .footer button {
+  padding: 1ch;
+}
+

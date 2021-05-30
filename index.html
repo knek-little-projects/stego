@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Simple Stego</title>
+  <title>Hide your secrets</title>
 
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-eval' 'unsafe-inline'">
   <meta charset="utf-8">
@@ -10,48 +10,165 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
   <link rel="stylesheet" href="index.css" />
+  <script src="index.js"></script>
 </head>
 
 <body>
-  <label>
-    Stego file 1
-    <input id="file1" type="file" />
-  </label>
+  <div class="main">
+    <div id="form" class="form">
+      <div class="title">
+        <h1>Hide your secrets</h1>
+      </div>
+      <div class="field">
+        <div class="name">
+          <b>Public file #1</b>
+        </div>
+        <div class="value">
+          <input id="file1" type="file" />
+        </div>
+      </div>
 
-  <label>
-    Stego file 2
-    <input id="file2" type="file" />
-  </label>
+      <div class="field">
+        <div class="name">
+          <b>Public file #2</b>
+        </div>
+        <div class="value">
+          <input id="file2" type="file" />
+        </div>
+      </div>
 
-  <label>
-    Secret
-    <input id="fileSecret" type="file" />
-  </label>
+      <div class="field">
+        <div class="name">
+          Public file #3
+        </div>
+        <div class="value">
+          <input id="file3" type="file" />
+        </div>
+      </div>
 
-  <hr />
+      <div class="field">
+        <div class="name">
+          Public file #4
+        </div>
+        <div class="value">
+          <input id="file4" type="file" />
+        </div>
+      </div>
 
-  <input id="password" value="password" />
-  <input id="algoLength" value="256" />
-  <input id="kdfHashName" value="SHA-512" />
-  <input id="algoName" value="AES-CBC" />
-  <input id="kdfName" value="PBKDF2" />
-  <input id="kdfIterations" value="1000000" />
-  <input id="fileSeparator" value="===" />
+      <div class="field">
+        <div class="name">
+          <b>Password</b>
+        </div>
+        <div class="value">
+          <input id="password" value="" />
+        </div>
+      </div>
 
-  <hr />
+      <div class="field">
+        <div class="name">
+          Secret to hide
+        </div>
+        <div class="value">
+          <input id="fileSecret" type="file" />
+        </div>
+      </div>
 
-  <button onclick="mainEncrypt()">ENCRYPT</button>
-  <button onclick="mainDecrypt()">DECRYPT</button>
+      <div class="field">
+        <div class="name">
+          algoLength
+        </div>
+        <div class="value">
+          <input id="algoLength" value="256" />
+        </div>
+      </div>
 
-  <hr />
+      <div class="field">
+        <div class="name">
+          kdfHashName
+        </div>
+        <div class="value">
+          <input id="kdfHashName" value="SHA-512" />
+        </div>
+      </div>
 
-  <div id="result" class="hidden">
-    <a id="resultStegoFile1"><button>Encrypted stego file 1</button></a>
-    <a id="resultStegoFile2"><button>Encrypted stego file 2</button></a>
-    <a id="resultDecryptedFile"><button>Decrypted secret</button></a>
+      <div class="field">
+        <div class="name">
+          algoName
+        </div>
+        <div class="value">
+          <input id="algoName" value="AES-CBC" />
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="name">
+          kdfName
+        </div>
+        <div class="value">
+          <input id="kdfName" value="PBKDF2" />
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="name">
+          kdfIterations
+        </div>
+        <div class="value">
+          <input id="kdfIterations" value="1000000" />
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="name">
+          fileSeparator
+        </div>
+        <div class="value">
+          <input id="fileSeparator" value="===" />
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="footer">
+      <button onclick="mainEncrypt().catch(alert)">ENCRYPT</button>
+      <button onclick="mainDecrypt().catch(alert)">DECRYPT</button>
+      </div>
+    </div>
+
+    <div id="result" class="hidden">
+      <a id="resultStegoFile1" class="hidden">
+        <button>
+          <div class="down-arrow">&DownArrowBar;</div>
+          Encrypted stego file 1
+        </button>
+      </a>
+      <a id="resultStegoFile2" class="hidden">
+        <button>
+          <div class="down-arrow">&DownArrowBar;</div>
+          Encrypted stego file 2
+        </button>
+      </a>
+      <a id="resultStegoFile3" class="hidden">
+        <button>
+          <div class="down-arrow">&DownArrowBar;</div>
+          Encrypted stego file 3
+        </button>
+      </a>
+      <a id="resultStegoFile4" class="hidden">
+        <button>
+          <div class="down-arrow">&DownArrowBar;</div>
+          Encrypted stego file 4
+        </button>
+      </a>
+      <a id="resultDecryptedFile" class="hidden">
+        <button>
+          <div class="down-arrow">&DownArrowBar;</div>
+          Decrypted secret
+        </button>
+      </a>
+    </div>
   </div>
 
-  <script src="index.js"></script>
 </body>
 
 </html>
