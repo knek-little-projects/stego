@@ -1,3 +1,29 @@
+function fillRandom(buffer: Uint8Array, MAX_RANDOM_BYTES = 65535, gen: ((a: Uint8Array) => void) = (a) => { window.crypto.getRandomValues(a) }) {
+  const totalLength = buffer.byteLength
+  const smallerBuffer = new Uint8Array(MAX_RANDOM_BYTES)
+
+  for (let i = 0; i < Math.floor(totalLength / MAX_RANDOM_BYTES); i += 1) {
+    gen(smallerBuffer)
+    const offset = i * MAX_RANDOM_BYTES
+    for (let j = 0; j < MAX_RANDOM_BYTES; j++) {
+      buffer[offset + j] = smallerBuffer[j]
+    }
+  }
+
+  const leftOver = totalLength % MAX_RANDOM_BYTES
+  gen(smallerBuffer)
+  const offset = totalLength - leftOver
+  for (let j = 0; j < leftOver; j++) {
+    buffer[offset + j] = smallerBuffer[j]
+  }
+}
+
+function getRandomValues(n: number): Uint8Array {
+  const a = new Uint8Array(n)
+  fillRandom(a)
+  return a
+}
+
 async function deriveKey(args: {
   kdfName: string,
   password: Uint8Array,
@@ -78,7 +104,7 @@ async function decrypt(args: {
 }
 
 function XORSplit(secret: Uint8Array): Array<Uint8Array> {
-  const part1 = window.crypto.getRandomValues(new Uint8Array(secret.byteLength))
+  const part1 = getRandomValues(secret.byteLength)
   const part2 = new Uint8Array(secret.byteLength)
   for (let i = 0; i < secret.byteLength; i++) {
     part2[i] = part1[i] ^ secret[i]
@@ -208,8 +234,8 @@ function rightIndexOfSubArray(haystack: Uint8Array, needle: Uint8Array, end: num
 async function mainEncrypt() {
   const args = await getArgs()
 
-  const salt = window.crypto.getRandomValues(new Uint8Array(16))
-  const iv = window.crypto.getRandomValues(new Uint8Array(16))
+  const salt = getRandomValues(16)
+  const iv = getRandomValues(16)
   const password = new TextEncoder().encode(args.password)
   const key = await deriveKey({ ...args, password, salt })
 

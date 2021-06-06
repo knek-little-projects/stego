@@ -130,8 +130,8 @@
       <hr />
 
       <div class="footer">
-      <button onclick="mainEncrypt().catch(alert)">ENCRYPT</button>
-      <button onclick="mainDecrypt().catch(alert)">DECRYPT</button>
+      <button onclick="mainEncrypt().catch(e => { alert(e); throw e; })">ENCRYPT</button>
+      <button onclick="mainDecrypt().catch(e => { alert(e); throw e; })">DECRYPT</button>
       </div>
     </div>
 
@@ -169,6 +169,7 @@
     </div>
   </div>
 
+  <script src="test.js"></script>
 </body>
 
 </html>
